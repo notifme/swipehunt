@@ -1,0 +1,18 @@
+{
+    "parser": "babel-eslint",
+    "env": {
+        "browser": true
+    },
+    "plugins": [
+        "react"
+    ],
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended"
+    ],
+    "rules": {
+        quotes: ["error", "single"],
+        object-curly-spacing: ["error", "never"],
+        "react/prop-types": "off"
+    }
+}
