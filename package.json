@@ -8,7 +8,9 @@
     "eslint-plugin-react": "^7.1.0",
     "jest-expo": "~18.0.0",
     "react-native-scripts": "0.0.50",
-    "react-test-renderer": "16.0.0-alpha.12"
+    "react-test-renderer": "16.0.0-alpha.12",
+    "@storybook/react-native": "^3.1.9",
+    "react-dom": "16.0.0-alpha.12"
   },
   "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
   "scripts": {
@@ -16,7 +18,8 @@
     "eject": "react-native-scripts eject",
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
-    "test": "node node_modules/jest/bin/jest.js --watch"
+    "test": "node node_modules/jest/bin/jest.js --watch",
+    "storybook": "storybook start -p 7007"
   },
   "jest": {
     "preset": "jest-expo"
