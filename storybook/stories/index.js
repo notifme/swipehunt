@@ -62,6 +62,11 @@ storiesOf('Swiper El', module)
       </Container>
     )
     .add('Empty', () => <Swiper items={[]} onTimeout={action('timeout')} />)
-    .add('With 3 products', () => <Swiper onTimeout={action('timeout')} items={data.posts.slice(0, 3)}
-        onSwipeLeft={action('nope')} onSwipeRight={action('yup')} />)
+    .add('With 3 products', () => <Swiper
+        onTimeout={action('timeout')}
+        items={data.posts.slice(0, 3)}
+        itemNumberCurrent={12}
+        itemNumberTotal={20}
+        onSwipeLeft={action('nope')}
+        onSwipeRight={action('yup')} />)
     ;

@@ -1,5 +1,5 @@
 import React from 'react';
-import {DeckSwiper, Button, Text} from 'native-base';
+import {DeckSwiper, Button, Text, Footer} from 'native-base';
 import {View, Image} from 'react-native';
 
 import Timer from './timer';
@@ -17,28 +17,44 @@ const Empty = ({onTimeout}) => (
     <View style={{flex: 3, alignItems: 'center', justifyContent: 'center'}}>
       <View>
         <Button>
-          <Text >VIEW MY LIKE</Text>
+          <Text>VIEW MY LIKES</Text>
         </Button>
       </View>
     </View>
   </View>
 );
 
+class PureSwiper extends React.PureComponent {
+  render() {
+    return <DeckSwiper {...this.props} />;
+  }
+}
+
+const renderItem = (item) => <ProductCard {...item} />;
+
 const Swiper = ({
   items,
   onSwipeRight,
   onSwipeLeft,
-  onTimeout
-}) => items.length > 0 ?
-      (<View style={{flex: 1, padding: 12}}>
-        <DeckSwiper
-          looping={false}
-          dataSource={items}
-          renderItem={item => <ProductCard {...item} />}
-          onSwipeRight={onSwipeRight}
-          onSwipeLeft={onSwipeLeft}
-        />
-      </View>)
+  onTimeout,
+  itemNumberCurrent,
+  itemNumberTotal
+}) => items.length > 0 ? (
+        <View style={{flex: 1}}>
+          <View style={{flex: 1, padding: 12}}>
+              <PureSwiper
+                looping={false}
+                dataSource={items}
+                renderItem={renderItem}
+                onSwipeRight={onSwipeRight}
+                onSwipeLeft={onSwipeLeft}
+              />
+          </View>
+          <Footer style={{height: 25, elevation:0}}>
+            <Text style={{color: 'white'}}>{itemNumberCurrent} / {itemNumberTotal}</Text>
+          </Footer>
+        </View>
+      )
       : <Empty onTimeout={onTimeout} />
 ;
 

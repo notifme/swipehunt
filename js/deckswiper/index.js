@@ -10,7 +10,9 @@ import Swiper from './swiper';
 class PageSwiper extends React.Component {
   state = {
     loading: true,
-    posts: []
+    posts: [],
+    itemNumberCurrent: 0,
+    itemNumberTotal: 0
   };
   session = null;
 
@@ -49,7 +51,9 @@ class PageSwiper extends React.Component {
 
       this.setState({
         posts: json.posts.filter(p => this.session.swiped.indexOf(p.id) === -1),
-        loading: false
+        loading: false,
+        itemNumberCurrent: this.session.swiped.length + 1,
+        itemNumberTotal: json.posts.length
       });
     } catch(error) {
       Toast.show({
@@ -66,6 +70,8 @@ class PageSwiper extends React.Component {
 
     if (this.state.posts.indexOf(o) === this.state.posts.length - 1) {
       this.setState({posts: []});
+    } else {
+      this.setState({itemNumberCurrent: this.state.itemNumberCurrent + 1});
     }
   }
 
@@ -81,6 +87,8 @@ class PageSwiper extends React.Component {
     return (
       <Page title="Hunty - Swiper" navigation={this.props.navigation} loading={this.state.loading}>
         <Swiper
+          itemNumberCurrent={this.state.itemNumberCurrent}
+          itemNumberTotal={this.state.itemNumberTotal}
           items={this.state.posts}
           onSwipeLeft={this.onSwipeLeft}
           onSwipeRight={this.onSwipeRight}
