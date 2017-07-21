@@ -1,7 +1,6 @@
 import React from 'react';
 import {Linking} from 'react-native';
 import Thumb from '../Thumb';
-import data from '../data';
 
 import {
   Container,
@@ -94,7 +93,7 @@ const PageList = ({navigation}) => (
         <Text>NEW</Text>
       </Separator>
       <List
-        dataArray={data.posts}
+        dataArray={[]}
         renderRow={item => <Item {...item} />}
       />
       <Separator bordered>

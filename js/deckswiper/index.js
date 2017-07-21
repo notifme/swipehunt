@@ -1,44 +1,58 @@
 import React from 'react';
-import {View} from 'react-native';
-import ProductCard from './card';
-import data from '../data';
+import Swiper from './swiper';
 
 import {
   Container,
   Header,
   Title,
   Button,
-  DeckSwiper,
   Icon,
   Left,
   Right,
   Body,
+  Text
 } from 'native-base';
 
-const PageSwiper = ({navigation}) => (
-  <Container style={{backgroundColor: '#fbfafa'}}>
-    <Header>
-      <Left>
-        <Button
-          transparent
-          onPress={() => navigation.navigate('DrawerOpen')}
-        >
-          <Icon name="menu" />
-        </Button>
-      </Left>
-      <Body>
-        <Title>Deck Swiper</Title>
-      </Body>
-      <Right />
-    </Header>
+class WState extends React.Component {
+  constructor(props) {
+    super(props);
 
-    <View style={{flex: 1, padding: 12}}>
-      <DeckSwiper
-        dataSource={data.posts}
-        renderItem={item => <ProductCard {...item} />}
-      />
-    </View>
-  </Container>
-);
+    this.state = {
+      posts: []
+    };
+  }
 
-export default PageSwiper;
+  onSwipe = () => {
+    console.log('swipe');
+  }
+
+  render() {
+    return (
+      <Container style={{backgroundColor: '#fbfafa'}}>
+        <Header>
+          <Left>
+            <Button
+              transparent
+              onPress={() => this.props.navigation.navigate('DrawerOpen')}
+            >
+              <Icon name="menu" />
+            </Button>
+          </Left>
+          <Body>
+            <Title>Deck Swiper</Title>
+          </Body>
+          <Right />
+        </Header>
+
+        <Swiper
+          items={this.state.posts}
+          onSwipeLeft={this.onSwipe}
+          onSwipeRight={this.onSwipe}
+          />
+      </Container>
+    );
+
+  }
+}
+
+export default WState;

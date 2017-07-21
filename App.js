@@ -1,11 +1,14 @@
 import Expo from 'expo';
 import React from 'react';
+import {StyleProvider} from 'native-base';
 
 import App from './js/App';
 import StoryBook from './storybook';
+import getTheme from './native-base-theme/components';
+import material from './native-base-theme/variables/material';
 
 // XXX change false -> true if you want sb
-const AppToLoad = false ? StoryBook : App;  //eslint-disable-line
+const AppToLoad = true ? StoryBook : App;  //eslint-disable-line
 
 class App1 extends React.Component {
   constructor() {
@@ -29,7 +32,12 @@ class App1 extends React.Component {
     if (!this.state.isReady) {
       return <Expo.AppLoading />;
     }
-    return <AppToLoad />;
+
+    return (
+      <StyleProvider style={getTheme(material)}>
+        <AppToLoad />
+      </StyleProvider>
+    );
   }
 }
 

@@ -7,10 +7,10 @@
     },
     "orientation": "portrait",
     "primaryColor": "#cccccc",
-    "androidStatusBarColor": "#334393",
+    "androidStatusBarColor": "#da552f",
     "androidStatusBar": {
       "barStyle": "light-content",
-      "backgroundColor": "#334393"
+      "backgroundColor": "#da552f"
     }
   }
 }
