@@ -1,58 +1,94 @@
 import React from 'react';
+import {AsyncStorage} from 'react-native';
+import {Toast} from 'native-base';
+
+
+import config from '../../config';
+import Page from '../page';
 import Swiper from './swiper';
 
-import {
-  Container,
-  Header,
-  Title,
-  Button,
-  Icon,
-  Left,
-  Right,
-  Body,
-  Text
-} from 'native-base';
+class PageSwiper extends React.Component {
+  state = {
+    loading: true,
+    posts: []
+  };
+  session = null;
 
-class WState extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      posts: []
-    };
+  saveSession = () => {
+    AsyncStorage.setItem('session', JSON.stringify(this.session));
   }
 
-  onSwipe = () => {
-    console.log('swipe');
+  resetSession = (day) => {
+    this.session = {
+      day: day,
+      swiped: [] // not implemented with shift because the order & the number of posts could change
+    }
+
+    this.saveSession()
+  }
+
+  async componentDidMount() {
+    try {
+      const fetched = await fetch(config.LATEST_ENDPOINT);
+      const json = await fetched.json();
+      const session = await AsyncStorage.getItem('session');
+
+      if (!json || !json.posts || json.posts.length === 0) {
+        throw new Error('No posts');
+      }
+
+      if (session === null) {
+        this.resetSession(json.posts[0].day);
+      } else {
+        this.session = JSON.parse(session);
+
+        if (this.session.day !== json.posts[0].day) { // new day => new session
+          this.resetSession(json.posts[0].day);
+        }
+      }
+
+      this.setState({
+        posts: json.posts.filter(p => this.session.swiped.indexOf(p.id) === -1),
+        loading: false
+      });
+    } catch(error) {
+      Toast.show({
+        text: 'Verify your internet connection and retry',
+        position: 'bottom',
+        buttonText: 'OKAY'
+      })
+    }
+  }
+
+  onSwipe = (o) => {
+    this.session.swiped.push(o.id);
+    this.saveSession();
+
+    if (this.state.posts.indexOf(o) === this.state.posts.length - 1) {
+      this.setState({posts: []});
+    }
+  }
+
+  onSwipeLeft = (o) => {
+    this.onSwipe(o);
+  }
+
+  onSwipeRight = (o) => {
+    this.onSwipe(o);
   }
 
   render() {
     return (
-      <Container style={{backgroundColor: '#fbfafa'}}>
-        <Header>
-          <Left>
-            <Button
-              transparent
-              onPress={() => this.props.navigation.navigate('DrawerOpen')}
-            >
-              <Icon name="menu" />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Deck Swiper</Title>
-          </Body>
-          <Right />
-        </Header>
-
+      <Page title="Hunty - Swiper" navigation={this.props.navigation} loading={this.state.loading}>
         <Swiper
           items={this.state.posts}
-          onSwipeLeft={this.onSwipe}
-          onSwipeRight={this.onSwipe}
+          onSwipeLeft={this.onSwipeLeft}
+          onSwipeRight={this.onSwipeRight}
           />
-      </Container>
+      </Page>
     );
 
   }
 }
 
-export default WState;
+export default PageSwiper;

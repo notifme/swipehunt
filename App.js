@@ -1,6 +1,10 @@
+/*
+
+ */
 import Expo from 'expo';
 import React from 'react';
-import {StyleProvider} from 'native-base';
+import {AsyncStorage} from 'react-native';
+import {StyleProvider, Root} from 'native-base';
 
 import App from './js/App';
 import StoryBook from './storybook';
@@ -19,6 +23,8 @@ class App1 extends React.Component {
   }
 
   async componentWillMount() {
+    if (__DEV__) await AsyncStorage.clear();
+
     await Expo.Font.loadAsync({
       Roboto: require('native-base/Fonts/Roboto.ttf'),
       Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
@@ -35,7 +41,9 @@ class App1 extends React.Component {
 
     return (
       <StyleProvider style={getTheme(material)}>
-        <AppToLoad />
+        <Root>
+          <AppToLoad />
+        </Root>
       </StyleProvider>
     );
   }
