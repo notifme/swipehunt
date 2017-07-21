@@ -8,10 +8,10 @@ import ProductCard from './card';
 
 const img = require('../../img/drawer-cover.png');
 
-const Empty = () => (
+const Empty = ({onTimeout}) => (
   <View style={{flex: 1}}>
     <Image source={img} style={{resizeMode: 'cover', flex: 2, padding: 50, height: null, width: null}}>
-      <Timer remaining={60} style={{textAlign: 'center', fontSize: 50, color: 'white'}} />
+      <Timer remaining={60} style={{textAlign: 'center', fontSize: 50, color: 'white'}} onTimeout={onTimeout} />
       <Text style={{textAlign: 'center', fontSize: 20, color: 'white'}}>until the next session</Text>
     </Image>
     <View style={{flex: 3, alignItems: 'center', justifyContent: 'center'}}>
@@ -28,6 +28,7 @@ const Swiper = ({
   items,
   onSwipeRight,
   onSwipeLeft,
+  onTimeout
 }) => items.length > 0 ?
       (<View style={{flex: 1, padding: 12}}>
         <DeckSwiper
@@ -38,7 +39,7 @@ const Swiper = ({
           onSwipeLeft={onSwipeLeft}
         />
       </View>)
-      : <Empty />
+      : <Empty onTimeout={onTimeout} />
 ;
 
 export default Swiper;

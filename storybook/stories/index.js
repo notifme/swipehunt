@@ -46,8 +46,6 @@ storiesOf('Swiper El', module)
 
   .add('Timer Timeout', () => <Timer remaining={2} style={{textAlign: 'center', fontSize: 50}} onTimeout={action('timeout')} />)
   .add('Timer', () => <Timer remaining={1*3600 + 24*60 + 3} style={{textAlign: 'center', fontSize: 50}} />)
-
-  .add('Swiper Empty', () => <Swiper items={[]} />)
   ;
 
   storiesOf('Swiper', module)
@@ -63,7 +61,7 @@ storiesOf('Swiper El', module)
         {getStory()}
       </Container>
     )
-    .add('Empty', () => <Swiper items={[]} />)
-    .add('With 3 products', () => <Swiper items={data.posts.slice(0, 3)}
+    .add('Empty', () => <Swiper items={[]} onTimeout={action('timeout')} />)
+    .add('With 3 products', () => <Swiper onTimeout={action('timeout')} items={data.posts.slice(0, 3)}
         onSwipeLeft={action('nope')} onSwipeRight={action('yup')} />)
     ;
