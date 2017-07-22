@@ -1,113 +1,55 @@
 import React from 'react';
-import {Linking} from 'react-native';
-import Thumb from '../Thumb';
+import {Linking, AsyncStorage} from 'react-native';
 
-import {
-  Container,
-  Header,
-  Title,
-  Content,
-  Button,
-  Icon,
-  List,
-  ListItem,
-  Text,
-  Thumbnail,
-  Left,
-  Body,
-  Right,
-  Separator
-} from 'native-base';
+import Page from '../page';
+import ProductList from './list';
 
-const sankhadeep = 'https://ph-files.imgix.net/503fa6cf-d3bb-4ed7-938e-dad5f11237c9?auto=format&auto=compress&codec=mozjpeg&cs=strip&w=80&h=80&fit=crop';
+class PageList extends React.Component {
+  state = {
+    liked: {
+      news: [],
+      archived: []
+    },
+    loading: true
+  };
 
-const datas = [
-  {
-    img: sankhadeep,
-    text: "Sankhadeep",
-    note: "Its time to build a difference . ."
-  },
-  {
-    img: sankhadeep,
-    text: "Supriya",
-    note: "One needs courage to be happy and smiling all time . . "
-  },
-  {
-    img: sankhadeep,
-    text: "Himanshu",
-    note: "Live a life style that matchs your vision"
-  },
-  {
-    img: sankhadeep,
-    text: "Shweta",
-    note: "Failure is temporary, giving up makes it permanent"
-  },
-  {
-    img: sankhadeep,
-    text: "Shruti",
-    note: "The biggest risk is a missed opportunity !!"
+  saveState = () => {
+
   }
-];
 
-const Item = ({
-  discussion_url,
-  name,
-  tagline,
-  thumbnail
-}) => (
-  <ListItem thumbnail>
-    <Left>
-      <Thumb uri={thumbnail.image_url}/>
-    </Left>
-    <Body>
-      <Text>{name}</Text>
-      <Text note numberOfLines={2}>{tagline}</Text>
-    </Body>
-    <Right>
-      <Button transparent onPress={() => Linking.openURL(discussion_url)}>
-        <Text>View</Text>
-      </Button>
-    </Right>
-  </ListItem>
-)
+  async componentDidMount() {
+    const liked = await AsyncStorage.getItem('liked');
 
-const PageList = ({navigation}) => (
-  <Container>
-    <Header>
-      <Left>
-        <Button
-          transparent
-          onPress={() => navigation.navigate('DrawerOpen')}
-        >
-          <Icon name="menu" />
-        </Button>
-      </Left>
-      <Body>
-        <Title>Yup List</Title>
-      </Body>
-      <Right />
-    </Header>
+    const newState = {loading: false};
+    if (liked !== null) newState.liked = JSON.parse(liked);
 
-    <Content>
-      <Separator bordered noTopBorder>
-        <Text>NEW</Text>
-      </Separator>
-      <List
-        dataArray={[]}
-        renderRow={item => <Item {...item} />}
-      />
-      <Separator bordered>
-        <Text>ARCHIVED</Text>
-      </Separator>
-      <Body style={{padding: 20}}>
-        <Text note>No archived Yup yet</Text>
-      </Body>
-      <List
-        dataArray={[]}
-        renderRow={item => <Item {...item} />}
-      />
-    </Content>
-  </Container>
-);
+    this.setState(newState);
+  }
+
+  onView = (product) => {
+    Linking.openURL(product.discussion_url);
+
+    const {liked} = this.state;
+    if (liked.news.some(p => p.id === product.id)) {
+      const newLiked = {
+        news: liked.news.filter(p => p.id !== product.id),
+        archived: [product, ...liked.archived.slice(0, 49)] // 50 max
+      };
+      this.setState({liked: newLiked});
+      AsyncStorage.setItem('liked', JSON.stringify(newLiked));
+    }
+  }
+
+  render() {
+    return (
+      <Page title="Hunty - Liked" navigation={this.props.navigation} loading={this.state.loading}>
+        <ProductList
+          archived={this.state.liked.archived}
+          news={this.state.liked.news}
+          onView={this.onView} />
+      </Page>
+    );
+  }
+}
 
 export default PageList;

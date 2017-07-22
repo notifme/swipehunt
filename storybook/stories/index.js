@@ -18,6 +18,9 @@ import Card from '../../js/deckswiper/card';
 import Timer from '../../js/deckswiper/timer';
 import Swiper from '../../js/deckswiper/swiper';
 
+import ListItem from '../../js/list/item';
+import List from '../../js/list/list';
+
 const card = {
   name: 'Awesome Product',
   tagline: 'This is a awesome project',
@@ -48,25 +51,46 @@ storiesOf('Swiper El', module)
   .add('Timer', () => <Timer remaining={1*3600 + 24*60 + 3} style={{textAlign: 'center', fontSize: 50}} />)
   ;
 
-  storiesOf('Swiper', module)
-    .addDecorator((getStory) =>
-      <Container style={{backgroundColor: '#fbfafa'}}>
-        <Header>
-          <Body>
-            <Title>Headers</Title>
-          </Body>
-          <Right />
-        </Header>
+storiesOf('Swiper', module)
+  .addDecorator((getStory) =>
+    <Container style={{backgroundColor: '#fbfafa'}}>
+      <Header>
+        <Body>
+          <Title>Headers</Title>
+        </Body>
+        <Right />
+      </Header>
 
-        {getStory()}
-      </Container>
-    )
-    .add('Empty', () => <Swiper items={[]} onTimeout={action('timeout')} />)
-    .add('With 3 products', () => <Swiper
-        onTimeout={action('timeout')}
-        items={data.posts.slice(0, 3)}
-        itemNumberCurrent={12}
-        itemNumberTotal={20}
-        onSwipeLeft={action('nope')}
-        onSwipeRight={action('yup')} />)
-    ;
+      {getStory()}
+    </Container>
+  )
+  .add('Empty', () => <Swiper items={[]} onTimeout={action('timeout')} />)
+  .add('With 3 products', () => <Swiper
+      onTimeout={action('timeout')}
+      items={data.posts.slice(0, 3)}
+      itemNumberCurrent={12}
+      itemNumberTotal={20}
+      onSwipeLeft={action('nope')}
+      onSwipeRight={action('yup')} />)
+  ;
+
+storiesOf('List', module)
+  .addDecorator((getStory) =>
+    <Container style={{backgroundColor: '#fbfafa'}}>
+      <Header>
+        <Body>
+          <Title>Headers</Title>
+        </Body>
+        <Right />
+      </Header>
+
+      {getStory()}
+    </Container>
+  )
+  .add('Item', () => <ListItem {...card} onView={action('view')} />)
+  .add('Item Real', () => <ListItem {...data.posts[0]} onView={action('view')} />)
+
+  .add('Empty', () => <List archived={[]} news={[]} />)
+  .add('Complete', () => <List archived={data.posts.slice(3)} news={data.posts.slice(0, 3)} onView={action('view')} />)
+  .add('Archived Only', () => <List archived={data.posts.slice(0, 6)} news={[]} onView={action('view')} />)
+  .add('News Only', () => <List archived={[]} news={data.posts.slice(0, 6)} onView={action('view')} />)

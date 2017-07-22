@@ -15,6 +15,7 @@ class PageSwiper extends React.Component {
     itemNumberTotal: 0
   };
   session = null;
+  liked = null;
 
   saveSession = () => {
     AsyncStorage.setItem('session', JSON.stringify(this.session));
@@ -34,6 +35,7 @@ class PageSwiper extends React.Component {
       const fetched = await fetch(config.LATEST_ENDPOINT);
       const json = await fetched.json();
       const session = await AsyncStorage.getItem('session');
+      const liked = await AsyncStorage.getItem('liked');
 
       if (!json || !json.posts || json.posts.length === 0) {
         throw new Error('No posts');
@@ -47,6 +49,12 @@ class PageSwiper extends React.Component {
         if (this.session.day !== json.posts[0].day) { // new day => new session
           this.resetSession(json.posts[0].day);
         }
+      }
+
+      if (liked === null) {
+        this.liked = {news: [], archived: []};
+      } else {
+        this.liked = JSON.parse(liked);
       }
 
       this.setState({
@@ -81,6 +89,8 @@ class PageSwiper extends React.Component {
 
   onSwipeRight = (o) => {
     this.onSwipe(o);
+    this.liked.news.push(o);
+    AsyncStorage.setItem('liked', JSON.stringify(this.liked));
   }
 
   render() {
