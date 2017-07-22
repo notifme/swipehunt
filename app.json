@@ -11,10 +11,6 @@
     "android": {
       "package": "com.devanco.hunty"
     },
-    "loading": {
-      "hideExponentText": false,
-      "backgroundImage": "./img/splashscreen.png"
-    },
     "orientation": "portrait",
     "primaryColor": "#cccccc",
     "androidStatusBarColor": "#da552f",
