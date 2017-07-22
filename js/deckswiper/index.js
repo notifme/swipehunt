@@ -93,16 +93,26 @@ class PageSwiper extends React.Component {
     AsyncStorage.setItem('liked', JSON.stringify(this.liked));
   }
 
+  renderSwiper() {
+    const nextDay = (new Date(`${this.session.day}T07:15:00Z`)).getTime() + 24 * 60 * 60 * 1000;
+
+    return (
+      <Swiper
+        itemNumberCurrent={this.state.itemNumberCurrent}
+        itemNumberTotal={this.state.itemNumberTotal}
+        items={this.state.posts}
+        onSwipeLeft={this.onSwipeLeft}
+        onSwipeRight={this.onSwipeRight}
+        nextTime={nextDay}
+        onTimeout={() => {/* TODO reload */}}
+        />
+    );
+  }
+
   render() {
     return (
       <Page title="Hunty - Swiper" navigation={this.props.navigation} loading={this.state.loading}>
-        <Swiper
-          itemNumberCurrent={this.state.itemNumberCurrent}
-          itemNumberTotal={this.state.itemNumberTotal}
-          items={this.state.posts}
-          onSwipeLeft={this.onSwipeLeft}
-          onSwipeRight={this.onSwipeRight}
-          />
+        {this.state.loading ? null : this.renderSwiper()}
       </Page>
     );
 
