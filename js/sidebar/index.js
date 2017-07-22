@@ -14,8 +14,7 @@ import {
 import styles from './style';
 
 const drawerCover = require('../../img/drawer-cover.png');
-
-const drawerImage = require('../../img/logo-kitchen-sink.png');
+const drawerImage = require('../../img/sidebar-hunty.png');
 
 const datas = [
   {
