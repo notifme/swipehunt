@@ -1,3 +1,3 @@
 export default {
-  LATEST_ENDPOINT: 'http://192.168.1.10:3000'
+  LATEST_ENDPOINT: 'https://hunty.now.sh/'
 };

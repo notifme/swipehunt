@@ -1,6 +1,16 @@
 {
   "expo": {
+    "name": "Hunty for Product Hunt",
+    "icon" : "./img/icon.png",
+    "version": "0.0.1",
+    "slug": "hunty-ph",
     "sdkVersion": "18.0.0",
+    "ios": {
+      "bundleIdentifier": "com.devanco.hunty"
+    },
+    "android": {
+      "package": "com.devanco.hunty"
+    },
     "loading": {
       "hideExponentText": false,
       "backgroundImage": "./img/splashscreen.png"
