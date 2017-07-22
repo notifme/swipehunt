@@ -65,7 +65,11 @@ storiesOf('Swiper', module)
       {getStory()}
     </Container>
   )
-  .add('Empty', () => <Swiper items={[]} onTimeout={action('timeout')} nextTime={Date.now() + 65000} />)
+  .add('Empty', () => <Swiper
+      items={[]}
+      onPressLikes={action('onPressLike')}
+      onTimeout={action('timeout')}
+      nextTime={Date.now() + 65000} />)
   .add('With 3 products', () => <Swiper
       onTimeout={action('timeout')}
       items={data.posts.slice(0, 3)}

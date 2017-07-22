@@ -104,6 +104,7 @@ class PageSwiper extends React.Component {
         onSwipeLeft={this.onSwipeLeft}
         onSwipeRight={this.onSwipeRight}
         nextTime={nextDay}
+        onPressLikes={() => this.props.navigation.navigate('List')}
         onTimeout={() => {/* TODO reload */}}
         />
     );
