@@ -20,6 +20,7 @@ import Swiper from '../../js/deckswiper/swiper';
 
 import ListItem from '../../js/list/item';
 import List from '../../js/list/list';
+import Sidebar from '../../js/sidebar';
 
 const card = {
   name: 'Awesome Product',
@@ -94,3 +95,7 @@ storiesOf('List', module)
   .add('Complete', () => <List archived={data.posts.slice(3)} news={data.posts.slice(0, 3)} onView={action('view')} />)
   .add('Archived Only', () => <List archived={data.posts.slice(0, 6)} news={[]} onView={action('view')} />)
   .add('News Only', () => <List archived={[]} news={data.posts.slice(0, 6)} onView={action('view')} />)
+;
+
+storiesOf('Sidebar', module)
+  .add('Index', () => <Sidebar />)

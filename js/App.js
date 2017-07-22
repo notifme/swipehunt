@@ -5,11 +5,11 @@ import DeckSwiper from './deckswiper';
 
 const DrawerExample = DrawerNavigator(
   {
-    Home: {screen: PageList},
-    Anatomy: {screen: DeckSwiper},
+    List: {screen: PageList},
+    Swiper: {screen: DeckSwiper},
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'List',
     contentOptions: {
       activeTintColor: '#e91e63'
     },
