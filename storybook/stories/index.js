@@ -1,5 +1,6 @@
 import React from 'react';
 import {View} from 'react-native';
+import AppIntro from 'react-native-app-intro';
 
 import {storiesOf} from '@storybook/react-native';
 import {action} from '@storybook/addon-actions';
@@ -21,6 +22,8 @@ import Swiper from '../../js/deckswiper/swiper';
 import ListItem from '../../js/list/item';
 import List from '../../js/list/list';
 import Sidebar from '../../js/sidebar';
+
+import Onboarding from '../../js/onboarding';
 
 const card = {
   name: 'Awesome Product',
@@ -103,3 +106,6 @@ storiesOf('List', module)
 
 storiesOf('Sidebar', module)
   .add('Index', () => <Sidebar />)
+
+storiesOf('Onboarding', module)
+  .add('Index', () => <Onboarding onDone={action('done')} />)

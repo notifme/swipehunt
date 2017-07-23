@@ -12,7 +12,7 @@ import getTheme from './native-base-theme/components';
 import material from './native-base-theme/variables/material';
 
 // XXX change false -> true if you want sb
-const AppToLoad = false ? StoryBook : App;  //eslint-disable-line
+const AppToLoad = true ? StoryBook : App;  //eslint-disable-line
 
 class App1 extends React.Component {
   constructor() {
