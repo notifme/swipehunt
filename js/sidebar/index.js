@@ -18,14 +18,14 @@ const drawerImage = require('../../img/sidebar-hunty.png');
 
 const datas = [
   {
-    name: 'My Likes',
-    route: 'List',
-    icon: 'md-heart-outline',
-  },
-  {
     name: 'Today Featured',
     route: 'Swiper',
     icon: 'md-swap',
+  },
+  {
+    name: 'My Likes',
+    route: 'List',
+    icon: 'md-heart-outline',
   }
 ];
 
