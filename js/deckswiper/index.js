@@ -112,7 +112,7 @@ class PageSwiper extends React.Component {
 
   render() {
     return (
-      <Page title="Hunty - Swiper" navigation={this.props.navigation} loading={this.state.loading}>
+      <Page title="Today Featured" navigation={this.props.navigation} loading={this.state.loading}>
         {this.state.loading ? null : this.renderSwiper()}
       </Page>
     );

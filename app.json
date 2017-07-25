@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Hunty for Product Hunt",
-    "icon" : "./img/icon.png",
-    "version": "0.0.1",
+    "name": "SwipeHunt for Product Hunt",
+    "icon" : "./img/icon2.png",
+    "version": "0.0.2",
     "slug": "hunty-ph",
     "sdkVersion": "18.0.0",
     "ios": {

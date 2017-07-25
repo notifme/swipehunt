@@ -42,7 +42,7 @@ class PageList extends React.Component {
 
   render() {
     return (
-      <Page title="Hunty - Liked" navigation={this.props.navigation} loading={this.state.loading}>
+      <Page title="My Likes" navigation={this.props.navigation} loading={this.state.loading}>
         <ProductList
           archived={this.state.liked.archived}
           news={this.state.liked.news}
