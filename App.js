@@ -6,6 +6,7 @@ import {StyleProvider, Root} from 'native-base';
 import getTheme from './native-base-theme/components';
 import material from './native-base-theme/variables/material';
 
+import config from './config';
 import Onboarding from './js/onboarding';
 import App from './js/App';
 import StoryBook from './storybook';
@@ -30,6 +31,14 @@ class App1 extends React.Component {
       Ionicons: require('@expo/vector-icons/fonts/Ionicons.ttf')
     });
 
+    if (!__DEV__) Expo.Amplitude.initialize(config.AMPLITUDE_KEY);
+
+    Expo.Amplitude.logEvent('Load');
+
+    if (onboardingDone === null) {
+      Expo.Amplitude.logEvent('Onboarding.Start');
+    }
+
     this.setState({
       ready: true,
       onboarding: onboardingDone === null
@@ -37,6 +46,7 @@ class App1 extends React.Component {
   }
 
   onOnboardingDone = () => {
+    Expo.Amplitude.logEvent('Onboarding.Done');
     AsyncStorage.setItem('onboardingDone', '1');
     this.setState({onboarding: false});
   }

@@ -1,3 +1,4 @@
+import Expo from 'expo';
 import React from 'react';
 import {AsyncStorage} from 'react-native';
 import {Toast} from 'native-base';
@@ -57,6 +58,11 @@ class PageSwiper extends React.Component {
         this.liked = JSON.parse(liked);
       }
 
+      Expo.Amplitude.logEventWithProperties('Swiper.Load', {
+        itemNumberCurrent: this.session.swiped.length + 1,
+        itemNumberTotal: json.posts.length
+      });
+
       this.setState({
         posts: json.posts.filter(p => this.session.swiped.indexOf(p.id) === -1),
         loading: false,
@@ -84,10 +90,18 @@ class PageSwiper extends React.Component {
   }
 
   onSwipeLeft = (o) => {
+    Expo.Amplitude.logEventWithProperties('Swiper.Swipe', {
+      direction: 'left',
+      productId: o.id
+    });
     this.onSwipe(o);
   }
 
   onSwipeRight = (o) => {
+    Expo.Amplitude.logEventWithProperties('Swiper.Swipe', {
+      direction: 'right',
+      productId: o.id
+    });
     this.onSwipe(o);
     this.liked.news.push(o);
     AsyncStorage.setItem('liked', JSON.stringify(this.liked));
@@ -104,8 +118,14 @@ class PageSwiper extends React.Component {
         onSwipeLeft={this.onSwipeLeft}
         onSwipeRight={this.onSwipeRight}
         nextTime={nextDay}
-        onPressLikes={() => this.props.navigation.navigate('List')}
-        onTimeout={() => {/* TODO reload */}}
+        onPressLikes={() => {
+          Expo.Amplitude.logEvent('Swiper.LikePress');
+          this.props.navigation.navigate('List');
+        }}
+        onTimeout={() => {
+          /* TODO reload */
+          Expo.Amplitude.logEvent('Swiper.Tiemout');
+        }}
         />
     );
   }

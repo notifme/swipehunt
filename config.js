@@ -1,3 +1,4 @@
 export default {
-  LATEST_ENDPOINT: 'https://hunty.now.sh/'
+  LATEST_ENDPOINT: 'https://hunty.now.sh/',
+  AMPLITUDE_KEY: 'XXX'
 };

@@ -1,3 +1,4 @@
+import Expo from 'expo';
 import React from 'react';
 import {Linking, AsyncStorage} from 'react-native';
 
@@ -13,20 +14,25 @@ class PageList extends React.Component {
     loading: true
   };
 
-  saveState = () => {
-
-  }
-
   async componentDidMount() {
     const liked = await AsyncStorage.getItem('liked');
 
     const newState = {loading: false};
     if (liked !== null) newState.liked = JSON.parse(liked);
 
+    Expo.Amplitude.logEventWithProperties('List.Load', {
+      likedNews: newState.liked ? newState.liked.news.length : 0,
+      likedArchived: newState.liked ? newState.liked.archived.length : 0
+    });
+
     this.setState(newState);
   }
 
   onView = (product) => {
+    Expo.Amplitude.logEventWithProperties('List.View', {
+      productId: product.id
+    });
+
     Linking.openURL(product.discussion_url);
 
     const {liked} = this.state;
