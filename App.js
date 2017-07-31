@@ -21,7 +21,7 @@ class App1 extends React.Component {
   };
 
   async componentWillMount() {
-    if (__DEV__) await AsyncStorage.clear();
+    if (__DEV__) await AsyncStorage.multiRemove(['onboardingDone', 'session', 'liked']);
 
     const onboardingDone = await AsyncStorage.getItem('onboardingDone');
 
