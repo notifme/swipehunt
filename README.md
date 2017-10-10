@@ -1,5 +1,7 @@
 # SwipeHunt
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/notifme/swipehunt.svg)](https://greenkeeper.io/)
+
 SwipeHunt is a minimalistic application to discover product on product hunt in a tinder-like funny way. Yup / Nope to prefilter featured project.
 
 ![image](https://user-images.githubusercontent.com/1775047/28575541-878db25a-7151-11e7-86c4-7a1755516caf.png)
